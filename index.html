@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Generator - Sheraton A</title>
+    <title>Sheraton Point A - QR Codes</title>
     <style>
         body { font-family: Arial, sans-serif; background: #1a1a1a; color: white; padding: 20px; text-align: center; }
         .grid { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 30px; }
         .card { background: white; padding: 15px; border-radius: 10px; text-align: center; width: 180px; color: black; }
-        .card h3 { margin: 10px 0; font-size: 16px; }
-        canvas, img { margin: 0 auto; }
+        .card h3 { margin: 10px 0; font-size: 16px; white-space: pre-line; }
+        canvas { margin: 0 auto; display: block; }
     </style>
 </head>
 <body>
@@ -19,8 +19,8 @@
     
     <div class="grid" id="qr-container"></div>
 
-    <!-- مكتبة توليد الباركود -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <!-- مكتبة توليد الباركود الجديدة والمستقرة -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
 
     <script>
         const baseUrl = "https://mohamedsenna330-hash.github.io/zeytouna-menu/";
@@ -35,23 +35,18 @@
             
             const title = document.createElement('h3');
             title.innerText = Sheraton A\nUmbrella ${i};
-            title.style.whiteSpace = "pre-line";
             
             const qrDiv = document.createElement('div');
-            qrDiv.id = qr-${i};
             
+            // توليد الباركود باستخدام المكتبة الجديدة
+            const qr = qrcode(0, 'H');
+            qr.addData(link);
+            qr.make();
+            qrDiv.innerHTML = qr.createImgTag(5); // 5 هو حجم الصورة
+
             card.appendChild(title);
             card.appendChild(qrDiv);
             container.appendChild(card);
-
-            new QRCode(qrDiv, {
-                text: link,
-                width: 150,
-                height: 150,
-                colorDark : "#000000",
-                colorLight : "#ffffff",
-                correctLevel : QRCode.CorrectLevel.H
-            });
         }
     </script>
 </body>
